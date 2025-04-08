@@ -49,7 +49,18 @@ class ItemEntryViewModel(private val itemsRepository: ItemsRepository) : ViewMod
             name.isNotBlank() && price.isNotBlank() && quantity.isNotBlank()
         }
     }
+
+    /**
+     * Add...
+     */
+    suspend fun saveItem() {
+        if (validateInput()) {
+            itemsRepository.insertItem(itemUiState.itemDetails.toItem())
+        }
+    }
 }
+
+
 
 /**
  * Represents Ui State for an Item.
@@ -100,5 +111,4 @@ fun Item.toItemDetails(): ItemDetails = ItemDetails(
     quantity = quantity.toString()
 )
 
-suspend fun saveItem() {
-}
+
